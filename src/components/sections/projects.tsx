@@ -1,4 +1,4 @@
-import { FolderGit2 } from "lucide-react"
+import { ArrowUpRight, FolderGit2 } from "lucide-react"
 import { Expandable } from "@/components/expandable"
 import { Reveal } from "@/components/motion/reveal"
 import { PeriodBadge } from "@/components/period-badge"
@@ -20,6 +20,16 @@ export function Projects() {
                 <PeriodBadge>{project.year}</PeriodBadge>
               </div>
               <p className="mb-1 text-xs text-foreground/50">{project.stack}</p>
+              {"url" in project && project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mb-2 inline-flex items-center gap-1 rounded-full border border-foreground/15 px-2.5 py-0.5 text-xs font-medium text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground"
+                >
+                  Live site <ArrowUpRight className="size-3.5" />
+                </a>
+              )}
               <p className="mb-4 text-sm text-foreground/80 italic">{project.summary}</p>
 
               <Expandable collapsedHeight={80}>

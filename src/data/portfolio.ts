@@ -96,6 +96,20 @@ export const projects = [
       { label: "Impact", text: "Powers pressure analysis and fracture monitoring visualizations for engineers." },
     ],
   },
+  {
+    title: "MyStudentz — Student Learning Platform",
+    stack: "React · Vite · Zustand · Tailwind CSS · Framer Motion · WebSockets · Razorpay · PWA",
+    year: "2026",
+    url: "https://mystudentz.in/",
+    summary: "Free notes, question papers and syllabus for higher-education students, organised by university, branch and semester.",
+    sections: [
+      { label: "Study content", text: "Module-wise notes, previous question papers and syllabus, browsable by university, course, branch, scheme and semester." },
+      { label: "Career tools", text: "Learning roadmaps, a resume builder and an ATS-style resume checker." },
+      { label: "Projects marketplace", text: "Students list and discover projects with reviews and interest requests; paid access through Razorpay orders with payment verification." },
+      { label: "Community", text: "Profiles with follow/followers, group discussions and real-time notifications over WebSockets (STOMP), plus web push notifications." },
+      { label: "Platform", text: "Installable PWA with an admin area for users, content and feedback, and a shop section." },
+    ],
+  },
 ]
 
 export const education = {
