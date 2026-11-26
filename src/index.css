@@ -161,6 +161,14 @@
     font-feature-settings: "cv11", "ss01", "ss03";
     -webkit-font-smoothing: antialiased;
   }
+  /* Hide the page scrollbar everywhere; the page still scrolls normally
+     (wheel, trackpad, touch, keyboard). The progress line at the top shows position. */
+  html {
+    scrollbar-width: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
   ::selection {
     background: color-mix(in oklch, var(--brand) 40%, transparent);
   }
