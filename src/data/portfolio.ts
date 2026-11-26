@@ -73,6 +73,7 @@ export const experience = [
 export const projects = [
   {
     title: "PIE Lake — OSDU Data Platform",
+    icon: "map",
     stack: "React · TypeScript · PostgreSQL · PostGIS · AWS",
     year: "2025",
     summary: "Geospatial search and administration for an OSDU data platform.",
@@ -86,6 +87,7 @@ export const projects = [
   },
   {
     title: "PIE Scale — Oil & Gas Data Management",
+    icon: "activity",
     stack: "Java · Spring Boot · React · TypeScript · Plotly · Zustand",
     year: "2025",
     summary: "Fiber-optic DAS/DTS hydraulic fracture monitoring and pressure analysis.",
@@ -98,6 +100,7 @@ export const projects = [
   },
   {
     title: "MyStudentz — Student Learning Platform",
+    icon: "graduation",
     stack: "React · Vite · Zustand · Tailwind CSS · Framer Motion · WebSockets · Razorpay · PWA",
     year: "2026",
     url: "https://mystudentz.in/",
