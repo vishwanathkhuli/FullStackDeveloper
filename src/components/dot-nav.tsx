@@ -1,10 +1,10 @@
 import { motion } from "motion/react"
+import { useEffect, useRef } from "react"
 import { useActiveSection } from "@/hooks/use-active-section"
 import { cn } from "@/lib/utils"
 
 const sections = [
   { id: "home", label: "Home" },
-  { id: "highlights", label: "Highlights" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "education", label: "Education" },
@@ -47,7 +47,7 @@ function PenRing() {
   )
 }
 
-/** Vertical notebook-style navigation on the right edge (xl screens). */
+/** Vertical notebook-style navigation on the right edge (xl screens; TopNav covers smaller ones). */
 export function DotNav() {
   const active = useActiveSection(ids)
 
@@ -88,5 +88,63 @@ export function DotNav() {
         )
       })}
     </motion.nav>
+  )
+}
+
+/**
+ * Top bar for phones and tablets (below xl), where the dot nav is hidden.
+ * Swipeable section tabs; the active one is marked and kept scrolled into view.
+ * Leaves room on the right for the theme toggle.
+ */
+export function TopNav() {
+  const active = useActiveSection(ids)
+  const listRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const list = listRef.current
+    const tab = list?.querySelector<HTMLElement>(`[data-id="${active}"]`)
+    if (!list || !tab) return
+    list.scrollTo({ left: tab.offsetLeft - (list.clientWidth - tab.offsetWidth) / 2, behavior: "smooth" })
+  }, [active])
+
+  return (
+    <motion.header
+      initial={{ opacity: 0, y: -16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.4 }}
+      className="fixed inset-x-0 top-0 z-50 h-14 border-b border-foreground/10 bg-background/80 backdrop-blur-md xl:hidden"
+    >
+      <nav aria-label="Sections" className="h-full pr-24">
+        <div
+          ref={listRef}
+          className="scrollbar-none flex h-full items-center gap-1 overflow-x-auto px-3 [mask-image:linear-gradient(to_right,black_85%,transparent)]"
+        >
+          {sections.map((s) => {
+            const isActive = active === s.id
+            return (
+              <a
+                key={s.id}
+                data-id={s.id}
+                href={`#${s.id}`}
+                aria-current={isActive ? "true" : undefined}
+                className={cn(
+                  "relative shrink-0 rounded-full px-3 py-1.5 font-hand text-lg leading-none whitespace-nowrap transition-colors",
+                  isActive ? "font-semibold text-foreground" : "text-foreground/50 hover:text-foreground/80",
+                )}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="top-nav-active"
+                    className="absolute inset-0 -z-10 rounded-full bg-foreground/10"
+                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                  />
+                )}
+                {s.label}
+              </a>
+            )
+          })}
+        </div>
+      </nav>
+    </motion.header>
   )
 }

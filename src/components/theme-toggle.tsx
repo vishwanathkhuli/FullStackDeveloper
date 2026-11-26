@@ -14,7 +14,7 @@ export function ThemeToggle() {
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.6 }}
-      className="fixed top-6 right-6 z-50 flex h-9 w-16 items-center rounded-full border border-foreground/10 bg-background/80 p-1 backdrop-blur-md"
+      className="fixed top-2.5 right-4 z-[55] flex xl:top-6 xl:right-6 h-9 w-16 items-center rounded-full border border-foreground/10 bg-background/80 p-1 backdrop-blur-md"
     >
       <motion.span
         layout

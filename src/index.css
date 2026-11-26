@@ -12,12 +12,12 @@
     --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
     --color-brand: var(--brand);
     --color-brand-2: var(--brand-2);
-    --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+    --animate-marquee-right: marquee-right var(--marquee-duration, 40s) linear infinite;
     --animate-shine: shine 6s linear infinite;
 
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(calc(-50% - 0.5rem)); }
+    @keyframes marquee-right {
+      from { transform: translate3d(-50%, 0, 0); }
+      to { transform: translate3d(0, 0, 0); }
     }
     @keyframes shine {
       from { background-position: 0% 50%; }

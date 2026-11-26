@@ -4,7 +4,9 @@ import { useEffect, useRef } from "react"
 /** Counts up from 0 to `value` once it scrolls into view. */
 export function Counter({ value, suffix = "", decimals = 0 }: { value: number; suffix?: string; decimals?: number }) {
   const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: "-60px" })
+  // Start as soon as any part is on screen (a negative margin left numbers near
+  // the bottom edge stuck at 0).
+  const inView = useInView(ref, { once: true })
   const count = useMotionValue(0)
   const rounded = useTransform(count, (v) => `${v.toFixed(decimals)}${suffix}`)
 

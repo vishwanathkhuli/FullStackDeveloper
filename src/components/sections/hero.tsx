@@ -2,8 +2,10 @@ import { motion } from "motion/react"
 import { MapPin } from "lucide-react"
 import { AvatarPhoto } from "@/components/avatar-photo"
 import { Counter } from "@/components/motion/counter"
+import { HighlightedText } from "@/components/motion/highlight"
 import { ScribbleArrow, ScribbleUnderline } from "@/components/motion/scribble"
 import { TextReveal } from "@/components/motion/text-reveal"
+import { SkillIcon } from "@/components/skill-icon"
 import { StatusBadge } from "@/components/status-badge"
 import { profile, stats } from "@/data/portfolio"
 
@@ -73,17 +75,29 @@ export function Hero() {
       </h1>
       <ScribbleUnderline className="mb-4 w-64 text-foreground/50 sm:w-96" delay={1} />
       <motion.p {...fadeUp(0.7)} className="text-base font-medium text-balance text-foreground/80 sm:text-xl">
-        {profile.role} <span className="text-foreground/30">·</span> {profile.team}
+        {profile.role}
       </motion.p>
-      <motion.p {...fadeUp(0.85)} className="mt-3 flex flex-wrap items-center justify-center gap-x-2 text-sm text-foreground/60 sm:text-base">
+      {/* One line: swipeable on phones, centred (allowed to overhang the column) from md up */}
+      <div className="scrollbar-none mt-5 -mx-6 w-[calc(100%+3rem)] overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] md:mx-0 md:flex md:w-full md:justify-center md:overflow-visible md:[mask-image:none]">
+      <ul className="mx-auto flex w-max flex-nowrap items-center gap-1.5 px-6 py-1 md:px-0 md:gap-2">
         {profile.keywords.map((k, i) => (
-          <span key={k} className="flex items-center gap-2">
-            {i > 0 && <span className="text-foreground/25">|</span>}
+          <motion.li
+            key={k}
+            initial={{ opacity: 0, y: 10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.9 + i * 0.08, type: "spring", stiffness: 260, damping: 20 }}
+            whileHover={{ y: -3 }}
+            className="flex shrink-0 items-center gap-1.5 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1 pr-2.5 pl-1 text-xs font-semibold whitespace-nowrap text-foreground/80 shadow-sm backdrop-blur-sm transition-colors duration-200 hover:border-foreground/25 hover:bg-foreground/[0.08] hover:text-foreground lg:py-1.5 lg:pr-3 lg:pl-1.5 lg:text-sm"
+          >
+            <span className="grid size-5 place-items-center rounded-full bg-background/80 ring-1 ring-foreground/10 lg:size-6">
+              <SkillIcon name={k} className="size-3.5 lg:size-4" />
+            </span>
             {k}
-          </span>
+          </motion.li>
         ))}
-      </motion.p>
-      <motion.p {...fadeUp(0.95)} className="mt-3 inline-flex items-center gap-1.5 text-xs text-foreground/50">
+      </ul>
+      </div>
+      <motion.p {...fadeUp(1.4)} className="mt-4 inline-flex items-center gap-1.5 text-xs text-foreground/50">
         <MapPin className="size-3.5" /> {profile.location}
       </motion.p>
 
@@ -124,7 +138,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: i * 0.1, ease }}
             className="text-pretty"
           >
-            {p}
+            <HighlightedText text={p} delay={0.4 + i * 0.2} />
           </motion.p>
         ))}
       </div>
