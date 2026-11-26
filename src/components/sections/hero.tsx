@@ -37,7 +37,7 @@ export function Hero() {
           initial={{ rotate: -6 }}
           animate={{ rotate: [-6, -2.5, -6] }}
           transition={{ delay: 2.8, duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute top-0 -right-24 origin-bottom-left text-foreground/60 sm:top-2 sm:-right-36"
+          className="pointer-events-none absolute -top-6 -right-24 origin-bottom-left text-foreground/60 sm:-top-6 sm:-right-32"
         >
           <motion.p
             initial={{ clipPath: "inset(0 100% 0 0)" }}
