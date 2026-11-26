@@ -1,6 +1,7 @@
 import { Briefcase } from "lucide-react"
 import { Expandable } from "@/components/expandable"
 import { Reveal } from "@/components/motion/reveal"
+import { PeriodBadge } from "@/components/period-badge"
 import { Section } from "@/components/section"
 import { experience } from "@/data/portfolio"
 
@@ -16,9 +17,9 @@ export function Experience() {
                   <Briefcase className="size-5" />
                 </span>
                 <div className="flex-1">
-                  <div className="flex flex-col justify-between sm:flex-row sm:items-baseline">
+                  <div className="flex flex-col justify-between gap-1.5 sm:flex-row sm:items-center sm:gap-3">
                     <h3 className="text-lg font-semibold">{job.company}</h3>
-                    <span className="font-mono text-xs text-foreground/50">{job.period}</span>
+                    <PeriodBadge>{job.period}</PeriodBadge>
                   </div>
                   <p className="text-sm text-foreground/60">
                     {job.role} · {job.team}

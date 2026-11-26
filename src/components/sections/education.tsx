@@ -1,5 +1,6 @@
 import { GraduationCap } from "lucide-react"
 import { Reveal } from "@/components/motion/reveal"
+import { PeriodBadge } from "@/components/period-badge"
 import { Section } from "@/components/section"
 import { education } from "@/data/portfolio"
 
@@ -12,9 +13,9 @@ export function Education() {
             <GraduationCap className="size-5" />
           </span>
           <div className="flex-1">
-            <div className="flex flex-col justify-between sm:flex-row sm:items-baseline">
+            <div className="flex flex-col justify-between gap-1.5 sm:flex-row sm:items-center sm:gap-3">
               <h3 className="text-lg font-medium">{education.school}</h3>
-              <span className="font-mono text-xs text-foreground/50">{education.period}</span>
+              <PeriodBadge>{education.period}</PeriodBadge>
             </div>
             <p className="text-sm text-foreground/60">{education.degree}</p>
             <p className="text-xs text-foreground/40">{education.location}</p>
