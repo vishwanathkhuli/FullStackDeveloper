@@ -144,6 +144,8 @@
     }
   body {
     @apply bg-background text-foreground;
+    /* Decorations (margin note, marquees) may overhang on narrow phones; never scroll sideways. */
+    overflow-x: clip;
     }
   button:not(:disabled), [role="button"]:not(:disabled) {
     cursor: pointer;

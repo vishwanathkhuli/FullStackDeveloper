@@ -1,4 +1,5 @@
 import { motion } from "motion/react"
+import type { CSSProperties } from "react"
 import { MapPin } from "lucide-react"
 import { AvatarPhoto } from "@/components/avatar-photo"
 import { Counter } from "@/components/motion/counter"
@@ -6,8 +7,10 @@ import { HighlightedText } from "@/components/motion/highlight"
 import { ScribbleArrow, ScribbleUnderline } from "@/components/motion/scribble"
 import { TextReveal } from "@/components/motion/text-reveal"
 import { SkillIcon } from "@/components/skill-icon"
+import { PhotoSocials } from "@/components/photo-socials"
 import { StatusBadge } from "@/components/status-badge"
 import { profile, stats } from "@/data/portfolio"
+import { cn } from "@/lib/utils"
 
 const ease = [0.22, 1, 0.36, 1] as const
 const fadeUp = (delay: number) => ({
@@ -28,18 +31,19 @@ export function Hero() {
       >
         <div className="absolute -inset-6 -z-10 rounded-full bg-[radial-gradient(circle,var(--foreground)_0%,transparent_65%)] opacity-[0.06] blur-xl transition-opacity duration-700 group-hover:opacity-[0.12]" />
         <AvatarPhoto className="size-32 rounded-full border border-foreground/10 shadow-md transition-transform duration-700 group-hover:scale-[1.03] sm:size-48" />
+        <PhotoSocials />
         {/* Margin note: writes itself in, then gently sways and the arrow keeps pointing at the photo */}
         <motion.div
           initial={{ rotate: -6 }}
           animate={{ rotate: [-6, -2.5, -6] }}
           transition={{ delay: 2.8, duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute top-2 -right-36 hidden origin-bottom-left text-foreground/60 sm:block"
+          className="pointer-events-none absolute top-0 -right-24 origin-bottom-left text-foreground/60 sm:top-2 sm:-right-36"
         >
           <motion.p
             initial={{ clipPath: "inset(0 100% 0 0)" }}
             animate={{ clipPath: "inset(0 0% 0 0)" }}
             transition={{ delay: 1.6, duration: 0.8, ease: "easeInOut" }}
-            className="font-hand text-2xl leading-none"
+            className="font-hand text-lg leading-none whitespace-nowrap sm:text-2xl"
           >
             that&apos;s me
             <motion.span
@@ -55,7 +59,7 @@ export function Hero() {
             transition={{ delay: 2.8, duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
             className="transition-[translate] duration-300 group-hover:-translate-x-2 group-hover:translate-y-2"
           >
-            <ScribbleArrow className="mt-1 -ml-6 h-12 w-16" delay={2.3} />
+            <ScribbleArrow className="mt-1 -ml-4 h-9 w-12 sm:-ml-6 sm:h-12 sm:w-16" delay={2.3} />
           </motion.div>
         </motion.div>
         {profile.available && (
@@ -77,25 +81,37 @@ export function Hero() {
       <motion.p {...fadeUp(0.7)} className="text-base font-medium text-balance text-foreground/80 sm:text-xl">
         {profile.role}
       </motion.p>
-      {/* One line: swipeable on phones, centred (allowed to overhang the column) from md up */}
-      <div className="scrollbar-none mt-5 -mx-6 w-[calc(100%+3rem)] overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] md:mx-0 md:flex md:w-full md:justify-center md:overflow-visible md:[mask-image:none]">
-      <ul className="mx-auto flex w-max flex-nowrap items-center gap-1.5 px-6 py-1 md:px-0 md:gap-2">
-        {profile.keywords.map((k, i) => (
-          <motion.li
-            key={k}
-            initial={{ opacity: 0, y: 10, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.9 + i * 0.08, type: "spring", stiffness: 260, damping: 20 }}
-            whileHover={{ y: -3 }}
-            className="flex shrink-0 items-center gap-1.5 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1 pr-2.5 pl-1 text-xs font-semibold whitespace-nowrap text-foreground/80 shadow-sm backdrop-blur-sm transition-colors duration-200 hover:border-foreground/25 hover:bg-foreground/[0.08] hover:text-foreground lg:py-1.5 lg:pr-3 lg:pl-1.5 lg:text-sm"
-          >
-            <span className="grid size-5 place-items-center rounded-full bg-background/80 ring-1 ring-foreground/10 lg:size-6">
-              <SkillIcon name={k} className="size-3.5 lg:size-4" />
-            </span>
-            {k}
-          </motion.li>
-        ))}
-      </ul>
+      {/* Phones/tablets: drifts left to right on a seamless loop (pauses while touched).
+          md and up: one static, centred line. */}
+      <div className="group mt-5 -mx-6 w-[calc(100%+3rem)] overflow-hidden py-1 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] md:mx-0 md:flex md:w-full md:justify-center md:overflow-visible md:[mask-image:none]">
+        <div
+          style={{ "--marquee-duration": "22s" } as CSSProperties}
+          className="flex w-max animate-marquee-right group-active:[animation-play-state:paused] motion-reduce:animate-none md:animate-none"
+        >
+          {[0, 1].map((dup) => (
+            <ul
+              key={dup}
+              aria-hidden={dup === 1}
+              className={cn("flex shrink-0 items-center gap-1.5 pr-1.5 md:gap-2 md:pr-0", dup === 1 && "md:hidden")}
+            >
+              {profile.keywords.map((k, i) => (
+                <motion.li
+                  key={k}
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: 0.9 + i * 0.08, type: "spring", stiffness: 260, damping: 20 }}
+                  whileHover={{ y: -3 }}
+                  className="flex shrink-0 items-center gap-1.5 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1 pr-2.5 pl-1 text-xs font-semibold whitespace-nowrap text-foreground/80 shadow-sm backdrop-blur-sm transition-colors duration-200 hover:border-foreground/25 hover:bg-foreground/[0.08] hover:text-foreground lg:py-1.5 lg:pr-3 lg:pl-1.5 lg:text-sm"
+                >
+                  <span className="grid size-5 place-items-center rounded-full bg-background/80 ring-1 ring-foreground/10 lg:size-6">
+                    <SkillIcon name={k} className="size-3.5 lg:size-4" />
+                  </span>
+                  {k}
+                </motion.li>
+              ))}
+            </ul>
+          ))}
+        </div>
       </div>
       <motion.p {...fadeUp(1.4)} className="mt-4 inline-flex items-center gap-1.5 text-xs text-foreground/50">
         <MapPin className="size-3.5" /> {profile.location}

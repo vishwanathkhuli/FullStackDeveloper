@@ -36,7 +36,8 @@ export const profile = {
   resumeUrl: "/resume.pdf",
   socials: {
     linkedin: "https://www.linkedin.com/in/vishwanath-khuli-068ab526b",
-    github: "", // add your GitHub URL to show the button
+    github: "https://github.com/vishwanathkhuli",
+    leetcode: "https://leetcode.com/u/vishwanathkhuli/",
   },
   summary: [
     `Full Stack Software Engineer with **${experienceText} of experience** building oil and gas data platforms with **React, TypeScript, Java (Spring Boot)**, REST APIs and PostgreSQL/PostGIS — deployed on **AWS (EKS, S3)** with Docker, Kubernetes and CI/CD.`,
